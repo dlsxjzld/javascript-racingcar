@@ -5,6 +5,7 @@ import { readUserInputUntilSuccess, FORMATTER } from './View/utils.js';
 import Race from './Domain/Model/Race.js';
 import { validateCarsName } from './Domain/Validation/carName.js';
 import { validateGameCount } from './Domain/Validation/gameCount.js';
+import WinningSelection from './Domain/Model/WinningSelection.js';
 
 class App {
   async #initialize() {
@@ -27,8 +28,12 @@ class App {
     const { cars, gameCount } = await this.#initialize();
     const race = new Race(gameCount, cars);
     race.startRace();
-    outputView.printRaceResult(race.getRaceResult());
-    outputView.printWinners(race.getWinners());
+    const raceResult = race.getRaceResult();
+    outputView.printRaceResult(raceResult);
+
+    const finishedRaceResult = race.getFinishedRaceResult();
+    const winningSelection = new WinningSelection(finishedRaceResult);
+    outputView.printWinners(winningSelection.getWinners());
   }
 }
 

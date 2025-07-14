@@ -40,6 +40,14 @@ export default class Race {
     return this.#raceResult;
   }
 
+  getFinishedRaceResult() {
+    if (this.#raceResult.length <= 0) {
+      throw new Error('게임 진행이 되지 않았습니다.');
+    }
+
+    return this.#raceResult[this.#raceResult.length - 1];
+  }
+
   getWinners() {
     const winnerPosition = Math.max(
       ...this.#cars.map((car) => car.getPosition()),
